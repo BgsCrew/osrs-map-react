@@ -1,0 +1,15 @@
+src/
+examples/
+.eslintrc.js
+rollup.config.js
+tsconfig.json
+*.log
+node_modules/
+.git/
+.github/
+tests/
+*.test.*
+*.spec.*
+coverage/
+.nyc_output/
+.cache/
