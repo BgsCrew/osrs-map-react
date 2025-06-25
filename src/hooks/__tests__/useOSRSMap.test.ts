@@ -378,10 +378,6 @@ describe('useOSRSMap Hook', () => {
 
   test('should handle existing tile layer removal when changing planes', () => {
     // This tests lines 28-29 in useOSRSMap.ts
-    const mockExistingTileLayer = {
-      addTo: jest.fn(),
-      remove: jest.fn(),
-    };
 
     // Start with a plane that has an existing tile layer
     const { rerender } = renderHook(
