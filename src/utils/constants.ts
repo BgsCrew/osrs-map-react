@@ -31,4 +31,5 @@ export const MIN_ZOOM = 4;
 export const MAX_ZOOM = 11;
 
 // Tile server URL pattern - plane will be inserted for {z}
-export const TILE_SERVER_URL = 'https://raw.githubusercontent.com/Explv/osrs_map_tiles/master/{plane}/{z}/{x}/{y}.png';
+export const TILE_SERVER_URL =
+  'https://raw.githubusercontent.com/Explv/osrs_map_tiles/master/{plane}/{z}/{x}/{y}.png';

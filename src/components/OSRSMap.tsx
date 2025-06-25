@@ -26,7 +26,7 @@ const MapController: React.FC<{
   const { centerOn } = useOSRSMap({
     map,
     plane,
-    onPositionChange
+    onPositionChange,
   });
 
   // Handle map clicks
@@ -56,14 +56,14 @@ const MapController: React.FC<{
   const renderMarkers = () => {
     if (!map || !markers?.length) return null;
 
-    return markers.map(marker => {
+    return markers.map((marker) => {
       const latLng = osrsToLatLng(map, marker.position.x, marker.position.y);
       return (
         <OSRSMarker
           key={marker.id}
           marker={{
             ...marker,
-            onClick: onMarkerClick || marker.onClick
+            onClick: onMarkerClick || marker.onClick,
           }}
           latLng={latLng}
         />
@@ -75,22 +75,27 @@ const MapController: React.FC<{
 };
 
 // Coordinates display overlay
-const CoordinatesDisplay: React.FC<{ position: OSRSPosition | null; show: boolean }> = ({ position, show }) => {
+const CoordinatesDisplay: React.FC<{ position: OSRSPosition | null; show: boolean }> = ({
+  position,
+  show,
+}) => {
   if (!show || !position) return null;
 
   return (
-    <div style={{
-      position: 'absolute',
-      top: '10px',
-      left: '10px',
-      zIndex: 1000,
-      background: 'rgba(0, 0, 0, 0.8)',
-      color: 'white',
-      padding: '8px 12px',
-      borderRadius: '4px',
-      fontSize: '12px',
-      fontFamily: 'monospace'
-    }}>
+    <div
+      style={{
+        position: 'absolute',
+        top: '10px',
+        left: '10px',
+        zIndex: 1000,
+        background: 'rgba(0, 0, 0, 0.8)',
+        color: 'white',
+        padding: '8px 12px',
+        borderRadius: '4px',
+        fontSize: '12px',
+        fontFamily: 'monospace',
+      }}
+    >
       X: {position.x}, Y: {position.y}, Z: {position.z}
     </div>
   );
@@ -108,19 +113,22 @@ export const OSRSMap: React.FC<OSRSMapProps> = ({
   className = '',
   style = {},
   width = '100%',
-  height = '400px'
+  height = '400px',
 }) => {
   const [currentPosition, setCurrentPosition] = useState<OSRSPosition | null>(null);
 
-  const handlePositionChange = useCallback((position: OSRSPosition) => {
-    setCurrentPosition(position);
-    onPositionChange?.(position);
-  }, [onPositionChange]);
+  const handlePositionChange = useCallback(
+    (position: OSRSPosition) => {
+      setCurrentPosition(position);
+      onPositionChange?.(position);
+    },
+    [onPositionChange]
+  );
 
   const mapStyle = {
     width,
     height,
-    ...style
+    ...style,
   };
 
   // Calculate initial center in LatLng for Leaflet
@@ -131,7 +139,10 @@ export const OSRSMap: React.FC<OSRSMapProps> = ({
   };
 
   return (
-    <div className={`osrs-map-container ${className}`} style={{ position: 'relative', ...mapStyle }}>
+    <div
+      className={`osrs-map-container ${className}`}
+      style={{ position: 'relative', ...mapStyle }}
+    >
       <MapContainer
         center={getInitialCenter()}
         zoom={zoom}
@@ -151,22 +162,24 @@ export const OSRSMap: React.FC<OSRSMapProps> = ({
           onMarkerClick={onMarkerClick}
         />
       </MapContainer>
-      
+
       <CoordinatesDisplay position={currentPosition} show={showCoordinates} />
-      
+
       {/* Plane indicator */}
-      <div style={{
-        position: 'absolute',
-        top: '10px',
-        right: '10px',
-        zIndex: 1000,
-        background: 'rgba(0, 0, 0, 0.8)',
-        color: 'white',
-        padding: '4px 8px',
-        borderRadius: '4px',
-        fontSize: '12px',
-        fontFamily: 'monospace'
-      }}>
+      <div
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          zIndex: 1000,
+          background: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          padding: '4px 8px',
+          borderRadius: '4px',
+          fontSize: '12px',
+          fontFamily: 'monospace',
+        }}
+      >
         Plane: {plane}
       </div>
     </div>

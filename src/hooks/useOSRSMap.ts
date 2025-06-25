@@ -30,16 +30,13 @@ export function useOSRSMap({ map, plane, onPositionChange }: UseOSRSMapProps) {
     }
 
     // Create new tile layer for the current plane
-    const newTileLayer = new TileLayer(
-      TILE_SERVER_URL.replace('{plane}', plane.toString()),
-      {
-        minZoom: 4,
-        maxZoom: 11,
-        attribution: 'OSRS Map Data',
-        noWrap: true,
-        tms: true
-      }
-    );
+    const newTileLayer = new TileLayer(TILE_SERVER_URL.replace('{plane}', plane.toString()), {
+      minZoom: 4,
+      maxZoom: 11,
+      attribution: 'OSRS Map Data',
+      noWrap: true,
+      tms: true,
+    });
 
     newTileLayer.addTo(map);
     currentTileLayerRef.current = newTileLayer;
@@ -54,13 +51,16 @@ export function useOSRSMap({ map, plane, onPositionChange }: UseOSRSMapProps) {
   }, [map, plane]);
 
   // Handle mouse move for position tracking
-  const handleMouseMove = useCallback((e: { latlng: L.LatLng }) => {
-    if (!map) return;
-    
-    const position = latLngToOsrs(map, e.latlng, plane);
-    setCurrentPosition(position);
-    onPositionChange?.(position);
-  }, [map, plane, onPositionChange]);
+  const handleMouseMove = useCallback(
+    (e: { latlng: L.LatLng }) => {
+      if (!map) return;
+
+      const position = latLngToOsrs(map, e.latlng, plane);
+      setCurrentPosition(position);
+      onPositionChange?.(position);
+    },
+    [map, plane, onPositionChange]
+  );
 
   // Set up mouse move listener
   useEffect(() => {
@@ -74,16 +74,19 @@ export function useOSRSMap({ map, plane, onPositionChange }: UseOSRSMapProps) {
   }, [map, handleMouseMove]);
 
   // Center map on OSRS coordinates
-  const centerOn = useCallback((coordinate: OSRSCoordinate, zoom?: number) => {
-    if (!map) return;
-    
-    const latLng = osrsToLatLng(map, coordinate.x, coordinate.y);
-    map.setView(latLng, zoom || map.getZoom());
-  }, [map]);
+  const centerOn = useCallback(
+    (coordinate: OSRSCoordinate, zoom?: number) => {
+      if (!map) return;
+
+      const latLng = osrsToLatLng(map, coordinate.x, coordinate.y);
+      map.setView(latLng, zoom || map.getZoom());
+    },
+    [map]
+  );
 
   return {
     currentPosition,
     centerOn,
-    tileLayer
+    tileLayer,
   };
 }

@@ -18,7 +18,7 @@ import {
   DEFAULT_ZOOM,
   MIN_ZOOM,
   MAX_ZOOM,
-  TILE_SERVER_URL
+  TILE_SERVER_URL,
 } from '../constants';
 
 describe('OSRS Constants', () => {
@@ -52,7 +52,7 @@ describe('OSRS Constants', () => {
     test('world should have reasonable dimensions', () => {
       const worldWidth = MAX_X - MIN_X;
       const worldHeight = MAX_Y - MIN_Y;
-      
+
       expect(worldWidth).toBeGreaterThan(0);
       expect(worldHeight).toBeGreaterThan(0);
       expect(worldWidth).toBe(3200); // 50 regions * 64 tiles
@@ -72,7 +72,7 @@ describe('OSRS Constants', () => {
       expect(MIN_ZOOM).toBe(4);
       expect(MAX_ZOOM).toBe(11);
       expect(DEFAULT_ZOOM).toBe(8);
-      
+
       expect(DEFAULT_ZOOM).toBeGreaterThanOrEqual(MIN_ZOOM);
       expect(DEFAULT_ZOOM).toBeLessThanOrEqual(MAX_ZOOM);
     });
@@ -80,7 +80,9 @@ describe('OSRS Constants', () => {
 
   describe('Tile Server URL', () => {
     test('should have correct tile server URL pattern', () => {
-      expect(TILE_SERVER_URL).toBe('https://raw.githubusercontent.com/Explv/osrs_map_tiles/master/{plane}/{z}/{x}/{y}.png');
+      expect(TILE_SERVER_URL).toBe(
+        'https://raw.githubusercontent.com/Explv/osrs_map_tiles/master/{plane}/{z}/{x}/{y}.png'
+      );
       expect(TILE_SERVER_URL).toContain('{plane}');
       expect(TILE_SERVER_URL).toContain('{z}');
       expect(TILE_SERVER_URL).toContain('{x}');

@@ -13,17 +13,20 @@ interface OSRSMarkerProps {
 }
 
 const defaultIcon = new Icon({
-  iconUrl: 'https://raw.githubusercontent.com/Explv/explv.github.io/master/css/images/marker-icon.png',
-  shadowUrl: 'https://raw.githubusercontent.com/Explv/explv.github.io/master/css/images/marker-shadow.png',
+  iconUrl:
+    'https://raw.githubusercontent.com/Explv/explv.github.io/master/css/images/marker-icon.png',
+  shadowUrl:
+    'https://raw.githubusercontent.com/Explv/explv.github.io/master/css/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  shadowSize: [41, 41],
 });
 
-const createColoredIcon = (color: string) => new DivIcon({
-  className: 'osrs-marker',
-  html: `<div style="
+const createColoredIcon = (color: string) =>
+  new DivIcon({
+    className: 'osrs-marker',
+    html: `<div style="
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -31,9 +34,9 @@ const createColoredIcon = (color: string) => new DivIcon({
     border: 2px solid white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   "></div>`,
-  iconSize: [20, 20],
-  iconAnchor: [10, 10]
-});
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
 
 export const OSRSMarker: React.FC<OSRSMarkerProps> = ({ marker, latLng }) => {
   const getIcon = () => {
@@ -52,14 +55,18 @@ export const OSRSMarker: React.FC<OSRSMarkerProps> = ({ marker, latLng }) => {
       position={latLng}
       icon={getIcon()}
       eventHandlers={{
-        click: handleClick
+        click: handleClick,
       }}
     >
       {(marker.title || marker.description || marker.popup) && (
         <Popup>
           <div className="osrs-marker-popup">
-            {marker.title && <h4 style={{ margin: '0 0 8px 0', fontSize: '14px' }}>{marker.title}</h4>}
-            {marker.description && <p style={{ margin: '0 0 8px 0', fontSize: '12px' }}>{marker.description}</p>}
+            {marker.title && (
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px' }}>{marker.title}</h4>
+            )}
+            {marker.description && (
+              <p style={{ margin: '0 0 8px 0', fontSize: '12px' }}>{marker.description}</p>
+            )}
             <div style={{ fontSize: '11px', color: '#666' }}>
               Position: {marker.position.x}, {marker.position.y}, {marker.position.z}
             </div>
