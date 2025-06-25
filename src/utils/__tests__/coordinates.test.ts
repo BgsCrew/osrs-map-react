@@ -107,6 +107,26 @@ describe('Coordinate Conversion Utilities', () => {
       expect(result.z).toBe(0);
     });
 
+    test('should use default z parameter when not provided', () => {
+      // This tests line 36 in coordinates.ts - the default parameter z = 0
+      const latLng = {
+        lat: 32,
+        lng: 32,
+        equals: jest.fn(),
+        distanceTo: jest.fn(),
+        wrap: jest.fn(),
+        toBounds: jest.fn(),
+        clone: jest.fn(),
+      } as unknown as import('leaflet').LatLng;
+
+      // Call without the z parameter to test the default
+      const result = latLngToOsrs(mockMap as unknown as import('leaflet').Map, latLng);
+
+      expect(result.z).toBe(0); // Should default to 0
+      expect(result).toHaveProperty('x');
+      expect(result).toHaveProperty('y');
+    });
+
     test('should handle different Z levels', () => {
       const latLng = {
         lat: 32,

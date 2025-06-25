@@ -375,4 +375,32 @@ describe('useOSRSMap Hook', () => {
 
     expect(mockMap.removeLayer).toHaveBeenCalledWith(mockTileLayer);
   });
+
+  test('should handle existing tile layer removal when changing planes', () => {
+    // This tests lines 28-29 in useOSRSMap.ts
+    const mockExistingTileLayer = {
+      addTo: jest.fn(),
+      remove: jest.fn(),
+    };
+
+    // Start with a plane that has an existing tile layer
+    const { rerender } = renderHook(
+      ({ plane }) =>
+        useOSRSMap({
+          map: mockMap as unknown as import('leaflet').Map,
+          plane,
+        }),
+      { initialProps: { plane: 0 } }
+    );
+
+    // Simulate having an existing tile layer by manually setting the ref
+    // This would normally be set by the useEffect
+    expect(mockTileLayer.addTo).toHaveBeenCalledWith(mockMap);
+
+    // Now change the plane - this should trigger the tile layer removal
+    rerender({ plane: 1 });
+
+    // The old tile layer should be removed
+    expect(mockMap.removeLayer).toHaveBeenCalled();
+  });
 });
