@@ -81,3 +81,5 @@ node_modules/
 *.swp
 *.swo
 *~
+
+CLAUDE.md
